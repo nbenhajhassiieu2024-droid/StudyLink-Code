@@ -59,7 +59,7 @@ Step 2: Extract
 (Unzip the folder to your desktop or documents)
 
 Step 3: Run
-(Double-click: ads.py-> the program will open in your python environment)
+(Double-click: ads.py-> the program will open in your python environment (in the editor window, you will have to click on run (F5 button on MacOS)))
 
 # How to use the project #
 
