@@ -1,0 +1,34 @@
+{
+  "nour": [
+    "nbenhajhassi.ieu2024@student.ie.edu",
+    "BBADBA",
+    "Madrid",
+    ["algorithms", "finance", "maths"],
+    ["mon-10"],
+    ["quiet"]
+  ],
+  "lisa": [
+    "llee.ieu2025@student.ie.edu",
+    "LLB",
+    "Madrid",
+    ["algorithms", "law", "english"],
+    ["mon-10"],
+    ["quiet"]
+  ],
+  "eva": [
+    "egomez.ieu2025@student.ie.edu",
+    "BCDM",
+    "Madrid",
+    ["algorithms", "design"],
+    ["wed-16"],
+    ["discussion"]
+  ],
+  "hiro": [
+    "hsen.ieu2024@student.ie.edu",
+    "BBADBA",
+    "Segovia",
+    ["algorithms", "marketing"],
+    ["mon-10", "thu-14"],
+    ["quiet", "willing_to_tutor"]
+  ]
+}
