@@ -191,3 +191,4 @@ def main():
         else:
             print("Invalid option, try again.")
 
+main()
