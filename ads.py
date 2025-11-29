@@ -171,7 +171,10 @@ def show_best_matches(users):
 
     while count < k and heap.heap_size() > 0:
         score, name = heap.pop_max()
+        email = users[name][0]                # get matched user's email
         print("Match:", name, "- score:", score)
+        print("Contact them at:", email)
+        print()
         count += 1
     print()
 
