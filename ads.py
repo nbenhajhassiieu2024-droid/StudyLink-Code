@@ -72,16 +72,22 @@ class Heap:
 def create_user(users):
     print("\nLet's create your StudyLink profile!")                         # explanation to user
 
-    username = input("Enter your username: ").strip().lower()              # ask for username
+    # email verification
+    email = input("Enter your IE email (@student.ie.edu): ").strip().lower() 
+    while "@student.ie.edu" not in email:                                   # check IE domain
+        print("Invalid email. Please use your official IE email.")          
+        email = input("Enter your IE email (@student.ie.edu): ").strip().lower()
+
+    username = input("Enter your username: ").strip().lower()               # ask for username
     while username in users:
-        print("This username already exists, choose another one.")         # check duplicates
+        print("This username already exists, choose another one.")          # check duplicates
         username = input("Enter your username: ").strip().lower()
 
     degree = input("Enter your degree (e.g. BBA, BBABDA, LLB): ").strip().lower()   # degree
 
     campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()          # campus
     while campus not in ["madrid", "segovia"]:
-        print("Invalid campus.")                                                     # campus check
+        print("Invalid campus.")                                                    # campus check
         campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()
 
     # classes input
@@ -98,6 +104,7 @@ def create_user(users):
 
     # store all info into dictionary
     users[username] = [
+        email,                                                                        # email
         degree,                                                                       # degree
         campus,                                                                       # campus
         class_set,                                                                    # set of classes
