@@ -123,7 +123,9 @@ for option 3: to quit
 
 # Files explained #
 ads.py	our main program: user management, scoring, heap, menu
+
 ux_tests/	the folder designed for our UX test video recordings
+
 resources/	the additional files such as test data
 
 # Prerequisites & Environment #
