@@ -122,11 +122,14 @@ for option 3: to quit
 * No external libraries required
 
 # Files explained #
-ads.py	our main program: user management, scoring, heap, menu
+**ads.py**	our main program: containing user cretion and management, the scoring logic, heap ranking algorithm, annd the menu
 
-ux_tests/	the folder designed for our UX test video recordings
+**README.md** the document containing the explanation of how to install run and understand the full project
 
-resources/	the additional files such as test data
+**ux_tests/**	the folder designed for our UX test video recordings
+
+**resources/** for some of the additional files such as test data (an example could be a test user file to test the program)
+
 
 # Prerequisites & Environment #
 
