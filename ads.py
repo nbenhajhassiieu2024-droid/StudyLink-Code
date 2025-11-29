@@ -7,183 +7,182 @@ Original file is located at
     https://colab.research.google.com/drive/1wgatu1kYeY7ZX2CC9cVNvxBNk9nWQc-5
 """
 import json
+import os
 
 class Heap:
     def __init__(self):
         self.heap = []
 
     def heap_size(self):
-        return len(self.heap)  # current number of elements in the heap
+        return len(self.heap)
 
     def swap(self, i, j):
         temp = self.heap[i]
         self.heap[i] = self.heap[j]
         self.heap[j] = temp
 
-    def swap(self, i, j):
-        temp = self.heap[i]                         # store first element
-        self.heap[i] = self.heap[j]                 # move second into first
-        self.heap[j] = temp                         # move temp into second
-
     def insert(self, item):
-        self.heap.append(item)                      # add new item at the end
-        self.fix_up(self.heap_size() - 1)           # restore heap property going up
+        self.heap.append(item)
+        self.fix_up(self.heap_size() - 1)
 
     def fix_up(self, index):
-        parent_index = (index - 1) // 2             # parent of current index
-
+        parent_index = (index - 1) // 2
         if index > 0 and self.heap[index][0] > self.heap[parent_index][0]:
-            self.swap(index, parent_index)          # swap with parent if child is larger
-            self.fix_up(parent_index)               # continue fixing up
+            self.swap(index, parent_index)
+            self.fix_up(parent_index)
 
     def get_max(self):
         if self.heap_size() == 0:
-            return None                             # heap empty
-        return self.heap[0]                         # root is max element
+            return None
+        return self.heap[0]
 
     def pop_max(self):
         if self.heap_size() == 0:
-            return None                             # nothing to remove
+            return None
 
-        max_item = self.heap[0]                     # save max element
+        max_item = self.heap[0]
         last_index = self.heap_size() - 1
-        self.swap(0, last_index)                    # move last element to root
-        self.heap.pop()                             # remove last position
+        self.swap(0, last_index)
+        self.heap.pop()
 
         if self.heap_size() > 0:
-            self.fix_down(0)                        # restore heap property going down
+            self.fix_down(0)
 
-        return max_item                             # return max element
+        return max_item
 
     def fix_down(self, index):
-        left = 2 * index + 1                        # left student index
-        right = 2 * index + 2                       # right student index
-        largest = index                             # assume current is largest
+        left = 2 * index + 1
+        right = 2 * index + 2
+        largest = index
 
         if left < self.heap_size() and self.heap[left][0] > self.heap[largest][0]:
-            largest = left                          # left student is larger
+            largest = left
 
         if right < self.heap_size() and self.heap[right][0] > self.heap[largest][0]:
-            largest = right                         # right student is larger
+            largest = right
 
         if largest != index:
-            self.swap(index, largest)               # swap with larger student
-            self.fix_down(largest)                  # continue fixing down
+            self.swap(index, largest)
+            self.fix_down(largest)
 
 def create_user(users):
-    print("\nLet's create your StudyLink profile!")                         # explanation to user
+    print("\nLet's create your StudyLink profile!")
 
-    # email verification
-    email = input("Enter your IE email (@student.ie.edu): ").strip().lower() 
-    while "@student.ie.edu" not in email:                                   # check IE domain
-        print("Invalid email. Please use your official IE email.")          
+    # email check
+    email = input("Enter your IE email (@student.ie.edu): ").strip().lower()
+    while "@student.ie.edu" not in email:
+        print("Invalid email. Please use your official IE email.")
         email = input("Enter your IE email (@student.ie.edu): ").strip().lower()
 
-    username = input("Enter your username: ").strip().lower()               # ask for username
+    # username
+    username = input("Enter your username: ").strip().lower()
     while username in users:
-        print("This username already exists, choose another one.")          # check duplicates
+        print("This username already exists, choose another one.")
         username = input("Enter your username: ").strip().lower()
 
-    degree = input("Enter your degree (e.g. BBA, BBABDA, LLB): ").strip().lower()   # degree
+    # degree
+    degree = input("Enter your degree (e.g. BBA, BBABDA, LLB): ").strip().lower()
 
-    campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()          # campus
+    # campus
+    campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()
     while campus not in ["madrid", "segovia"]:
-        print("Invalid campus.")                                                    # campus check
+        print("Invalid campus.")
         campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()
 
-    # classes input
-    classes = input("Enter your classes separated by commas: ").strip().lower()      # classes
-    class_set = set(c.strip() for c in classes.split(","))                           # convert to set
+    # classes
+    classes = input("Enter your classes separated by commas: ").strip().lower()
+    class_set = set(c.strip() for c in classes.split(","))
 
-    # availability input
+    # availability
     availability = input("Enter your availability (e.g. mon-10, wed-16) separated by commas: ").strip().lower()
-    avail_set = set(a.strip() for a in availability.split(","))                      # convert to set
+    avail_set = set(a.strip() for a in availability.split(","))
 
-    # preferences input
-    preferences = input("Enter your study preferences separated by commas (e.g. quiet, discussion, willing_to_tutor): ").strip().lower()
-    pref_set = set(p.strip() for p in preferences.split(","))                        # convert to set
+    # preferences
+    preferences = input("Enter your study preferences (e.g. quiet, discussion, willing_to_tutor): ").strip().lower()
+    pref_set = set(p.strip() for p in preferences.split(","))
 
-    # store all info into dictionary
+    # save to dictionary
     users[username] = [
-        email,                                                                        # email
-        degree,                                                                       # degree
-        campus,                                                                       # campus
-        class_set,                                                                    # set of classes
-        avail_set,                                                                    # set of availability
-        pref_set                                                                      # set of preferences
+        email,
+        degree,
+        campus,
+        class_set,
+        avail_set,
+        pref_set
     ]
 
-    print("\nProfile created successfully!\n")                                        # confirmation
+    save_users(users)   # save immediately
+
+    print("\nProfile created successfully!\n")
 
 def compute_score(users, user1, user2):
-    data1 = users[user1]                               # data for first user
-    data2 = users[user2]                               # data for second user
+    data1 = users[user1]
+    data2 = users[user2]
 
-    degree1, campus1, classes1, avail1, prefs1 = data1 # unpack first user
-    degree2, campus2, classes2, avail2, prefs2 = data2 # unpack second user
+    # unpack 6-element structure
+    email1, degree1, campus1, classes1, avail1, prefs1 = data1
+    email2, degree2, campus2, classes2, avail2, prefs2 = data2
 
-    shared_classes = len(classes1 & classes2)          # number of common classes
-    shared_slots = len(avail1 & avail2)                # number of common time slots
-    shared_prefs = len(prefs1 & prefs2)                # number of common preferences
+    shared_classes = len(classes1 & classes2)
+    shared_slots = len(avail1 & avail2)
+    shared_prefs = len(prefs1 & prefs2)
 
-    score = 0                                          # start score from 0
-
-    score += 5 * shared_classes                        # classes are most important
-    score += 3 * shared_slots                          # time overlap matters
+    score = 0
+    score += 5 * shared_classes
+    score += 3 * shared_slots
     if campus1 == campus2:
-        score += 4                                     # same campus adds points
-    score += 2 * shared_prefs                          # similar preferences small bonus
+        score += 4
+    score += 2 * shared_prefs
 
-    return score                                       # final compatibility score
+    return score
 
 def build_matches_heap(users, current_user):
-    heap = Heap()                                      # create empty heap
+    heap = Heap()
 
-    for other_user in users:                           # go through all users
-        if other_user == current_user:                 # skip same user
+    for other_user in users:
+        if other_user == current_user:
             continue
 
-        score = compute_score(users, current_user, other_user)  # compute compatibility
+        score = compute_score(users, current_user, other_user)
+        if score > 0:
+            heap.insert((score, other_user))
 
-        if score > 0:                                  # only keep positive matches
-            heap.insert((score, other_user))           # insert (score, username) in heap
-
-    return heap                                        # return heap with matches
+    return heap
 
 def show_best_matches(users):
-    print("\nAvailable users in the system:")          # list all usernames
+    print("\nAvailable users in the system:")
     for name in users.keys():
         print("-", name)
 
     current_user = input("\nEnter your username to see your best study matches: ").strip().lower()
-
-    while current_user not in users:                   # validate username
+    while current_user not in users:
         print("This username does not exist, please try again.")
         current_user = input("Enter your username: ").strip().lower()
 
-    heap = build_matches_heap(users, current_user)     # build heap of matches
+    heap = build_matches_heap(users, current_user)
 
     if heap.heap_size() == 0:
-        print("\nNo compatible matches found yet.\n")  # no matches case
+        print("\nNo compatible matches found yet.\n")
         return
 
-    print("\nThese are your best study matches:\n")    # print top results
-    k = 3                                              # number of matches to show
+    print("\nThese are your best study matches:\n")
+    k = 3
     count = 0
 
     while count < k and heap.heap_size() > 0:
-        score, name = heap.pop_max()                   # get best match
-        print("Match:", name, "- score:", score)       # show match and score
+        score, name = heap.pop_max()
+        print("Match:", name, "- score:", score)
         count += 1
     print()
 
+
 def load_users():
-    """Load users from users.json if it exists, otherwise return empty dict."""
-    try:
-        with open("users.json", "r") as f:
-            raw = json.load(f)
-    except FileNotFoundError:
+    path = "resources/users.json"
+    if not os.path.exists(path):
         return {}
+
+    with open(path, "r") as f:
+        raw = json.load(f)
 
     users = {}
     for username, data in raw.items():
@@ -192,7 +191,7 @@ def load_users():
             email,
             degree,
             campus,
-            set(classes),      # convert lists back to sets
+            set(classes),
             set(avail),
             set(prefs)
         ]
@@ -200,24 +199,25 @@ def load_users():
 
 
 def save_users(users):
-    """Save users dictionary into users.json (convert sets to lists)."""
+    path = "resources/users.json"
     raw = {}
+
     for username, data in users.items():
         email, degree, campus, classes, avail, prefs = data
         raw[username] = [
             email,
             degree,
             campus,
-            list(classes),     # sets → lists for JSON
+            list(classes),
             list(avail),
             list(prefs)
         ]
 
-    with open("users.json", "w") as f:
+    with open(path, "w") as f:
         json.dump(raw, f, indent=2)
-        
+
 def main():
-    users = load_users()                         # load existing users if any
+    users = load_users()
 
     while True:
         print("1) Create user")
@@ -238,4 +238,6 @@ def main():
         else:
             print("Invalid option, try again.")
 
+
 main()
+
