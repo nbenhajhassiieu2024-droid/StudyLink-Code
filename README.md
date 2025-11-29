@@ -121,6 +121,19 @@ for option 3: to quit
 
 * No external libraries required
 
+# Algorithm #
+
+For StudyLink, we created a matching algorithm that helps students find the most compatible study partners. The idea is to compare one student with all the other students in the system and decide who fits best based on several factors. To organize the information, we store every student in a dictionary, where each profile includes their degree, the classes they take, their available study times, their campus, and their study preferences. These pieces of information are kept in sets because sets make it easy and fast to compare similarities, such as checking how many classes two students share.
+
+
+When a student asks for matches, the algorithm looks at every other student and calculates a compatibility score. This score becomes higher when two students take the same classes, have overlapping time slots, share the same campus, or have similar study preferences. Each of these similarities contributes to the final score. This scoring step helps us measure how strong the connection between two users is.
+
+
+After the score is calculated, we place it inside a binary heap. A binary heap is a structure that always keeps the best-scoring users at the top. This helps us avoid sorting the entire list of users every time. By using the heap, we can quickly find the most compatible study partners without doing extra work. Once all the possible partners have been evaluated, we take the top results from the heap. These top results represent the students with the highest compatibility scores.
+
+
+This algorithm works well because it uses efficient data structures. The dictionary allows fast access to each user, the sets let us compare information quickly, and the binary heap helps us retrieve the best matches without wasting time. The overall process is efficient and grows well even if many students use the app. This makes it a practical and effective solution for StudyLink.
+
 # Files explained #
 **ads.py**	our main program: containing user cretion and management, the scoring logic, heap ranking algorithm, annd the menu
 
@@ -128,7 +141,7 @@ for option 3: to quit
 
 **ux_tests/**	the folder designed for our UX test video recordings
 
-**resources/** for some of the additional files such as test data (an example could be a test user file to test the program)
+**resources/** for some of the additional files such as test data (test users' file to test the program)
 
 
 # Prerequisites & Environment #
