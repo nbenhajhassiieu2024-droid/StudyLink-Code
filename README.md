@@ -8,7 +8,7 @@ StudyLink solves a real problem among IE students: it allows users to connect wi
 
 Through a simple console interface, StudyLink allows students to:
 
-1) Create a personal profile (degree, campus, classes, schedule, preferences)
+1) Create a personal profile (IE email, degree, campus, classes, availability, preferences)
 
 2) Store that data efficiently using dictionaries
 
@@ -22,7 +22,7 @@ Through a simple console interface, StudyLink allows students to:
 
 dictionaries (O(1)): very efficient for storing and accessing user profiles quickly
 
-sets (fast intersection): perfecy to compare shared classes and schedules
+sets (fast intersection): perfect to compare shared classes and schedules
 
 binary Heap (O(log n) priority queue): efficient structure to rank that always keeps best matches on top
 
@@ -35,14 +35,14 @@ Challenges faced:
 * Managing user input cleanly within the console itself
 
 * Ensuring the system that matches adapts and scales as more profiles are added
+  
+* Using a JSON file to store users permanently 
 
 Future features:
 
 * Replace console UI with a web or even a mobile interface
 
-* Real database (such as JSON or even SQL) to store profiles permanently when app is closed 
-
-* Inside app call options + ratings
+* Inside app call and chat options + ratings
 
 * Filters by study habits or academic strengths
 
@@ -51,6 +51,8 @@ Future features:
 # How to install and run the project #
 
 no need to type any terminal commands, just follow these simple steps:
+
+Make sure Python 3 and IDLE are installed!!! (you can install python on: [first letter of first name + last name](https://www.python.org/downloads/) )
 
 Step 1: Download ZIP
 (Click on the green code -> download ZIP button on GitHub)
@@ -69,11 +71,13 @@ When the program starts, you will see:
 2) Show matches
 3) Quit
 
-for option 1: create user
+Type 1 for option 1: create user
 
 You will enter:
 
-* Username
+* Your IE email: make sure it ends with @student.ie.edu
+
+* Your full name which will be used to automatically generate your StudyLink username: first letter of your first name + your last name (example: “maya smith” becomes “msmith”) 
 
 * Degree
 
@@ -81,15 +85,15 @@ You will enter:
 
 * Classes (comma-separated)
 
-* Availability (comma-separated)
+* Availability (comma-separated, format: mon-10 for Monday at 10, wed-22 Wednesday at 22)
 
 * Preferences (comma-separated)
 
 Your profile is then stored in the system dictionary
 
-for option 2: show matches
+Type 2 for option 2: show matches
 
-* Enter your username
+* Enter your the username that has been generated for you by StudyLink
 
 * Program computes compatibility with all other users: uses dictionary + scoring + heap ranking
 
@@ -99,9 +103,11 @@ Displays:
 * Match: nour – score: 15
 * Match: hiro – score: 14
 
-for option 3: to quit
+* The program also provides a suggested email you can send to your match
 
-* simply exits the program
+Type 3 for option 3: to quit
+
+* simply exits the program 
 
 # Features (MVP) #
 
@@ -135,7 +141,7 @@ After the score is calculated, we place it inside a binary heap. A binary heap i
 This algorithm works well because it uses efficient data structures. The dictionary allows fast access to each user, the sets let us compare information quickly, and the binary heap helps us retrieve the best matches without wasting time. The overall process is efficient and grows well even if many students use the app. This makes it a practical and effective solution for StudyLink.
 
 # Files explained #
-**ads.py**	our main program: containing user cretion and management, the scoring logic, heap ranking algorithm, annd the menu
+**ads.py**	our main program: containing user cretion and management, the scoring logic, heap ranking algorithm, and the menu
 
 **README.md** the document containing the explanation of how to install run and understand the full project
 
@@ -178,6 +184,6 @@ Eva Gomez — UI/UX mockups, app visuals, pitch presenter
 
 Hiroyuki Sen — User stories, algorithm testing
 
-Ismail Benabdallah — Coordination, pitch presentor, business model
+Ismail Benabdallah — Coordination, pitch presenter, business model
 
 For the course Algorithms & Data Structures of IE University in 2025
