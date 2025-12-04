@@ -66,19 +66,34 @@ class Heap:
             self.fix_down(largest)
 
 def create_user(users):
-    print("\nLet's create your StudyLink profile!")
+    print("\nThe first step is to create your StudyLink profile")
 
     # email check
     email = input("Enter your IE email (@student.ie.edu): ").strip().lower()
     while "@student.ie.edu" not in email:
-        print("Invalid email. Please use your official IE email.")
+        print("Your email is invalid, please make sure to use your official IE email")
         email = input("Enter your IE email (@student.ie.edu): ").strip().lower()
 
-    # username
-    username = input("Enter your username: ").strip().lower()
+    #username
+    full_name = input("Please enter your full name (first name and last name): ").strip().lower()
+
+    while len(full_name.split()) < 2:
+        print("Please enter both your first name AND last name")
+        full_name = input("Enter your full name (first name and last name): ").strip().lower()
+
+    first, last = full_name.split()[0], full_name.split()[-1]
+    username = (first[0] + last).replace(" ", "").lower()   # it will work like: maya smith becomes msmith
+
     while username in users:
-        print("This username already exists, choose another one.")
-        username = input("Enter your username: ").strip().lower()
+        print("This username already exists, choose another name")
+        full_name = input("Enter your full name (first name and last name): ").strip().lower()
+        while len(full_name.split()) < 2:
+            print("Please enter both first AND last name")
+            full_name = input("Enter your full name (first name and last name): ").strip().lower()
+        first, last = full_name.split()[0], full_name.split()[-1]
+        username = (first[0] + last).replace(" ", "").lower()
+
+    print("\nYour generated StudyLink username is:", username, "\nHope you like it!!")
 
     # degree
     degree = input("Enter your degree (e.g. BBA, BBABDA, LLB): ").strip().lower()
@@ -86,7 +101,7 @@ def create_user(users):
     # campus
     campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()
     while campus not in ["madrid", "segovia"]:
-        print("Invalid campus.")
+        print("Your campus is not valid")
         campus = input("Enter your campus (Madrid/Segovia): ").strip().lower()
 
     # classes
@@ -94,11 +109,11 @@ def create_user(users):
     class_set = set(c.strip() for c in classes.split(","))
 
     # availability
-    availability = input("Enter your availability (e.g. mon-10, wed-16) separated by commas: ").strip().lower()
+    availability = input("Enter your availability (e.g. mon-10: monday at 10, wed-22: wednesday at 22) separated by commas: ").strip().lower()
     avail_set = set(a.strip() for a in availability.split(","))
 
     # preferences
-    preferences = input("Enter your study preferences (e.g. quiet, discussion, willing_to_tutor): ").strip().lower()
+    preferences = input("Enter your study preferences (choose between: quiet, discussion, willing_to_tutor,on-campus,need_tutor): ").strip().lower()
     pref_set = set(p.strip() for p in preferences.split(","))
 
     # save to dictionary
@@ -111,15 +126,14 @@ def create_user(users):
         pref_set
     ]
 
-    save_users(users)   # save immediately
+    save_users(users)   
 
-    print("\nProfile created successfully!\n")
+    print("\nYour profile has been created successfully, you can now see your matches!\n")
 
 def compute_score(users, user1, user2):
     data1 = users[user1]
     data2 = users[user2]
 
-    # unpack 6-element structure
     email1, degree1, campus1, classes1, avail1, prefs1 = data1
     email2, degree2, campus2, classes2, avail2, prefs2 = data2
 
@@ -150,19 +164,19 @@ def build_matches_heap(users, current_user):
     return heap
 
 def show_best_matches(users):
-    print("\nAvailable users in the system:")
+    print("\nThese are all the available users in our system:")
     for name in users.keys():
         print("-", name)
 
     current_user = input("\nEnter your username to see your best study matches: ").strip().lower()
     while current_user not in users:
-        print("This username does not exist, please try again.")
+        print("This username does not exist, please try again")
         current_user = input("Enter your username: ").strip().lower()
 
     heap = build_matches_heap(users, current_user)
 
     if heap.heap_size() == 0:
-        print("\nNo compatible matches found yet.\n")
+        print("\nNo compatible matches found yet, try again later\n")
         return
 
     print("\nThese are your best study matches:\n")
@@ -172,8 +186,10 @@ def show_best_matches(users):
     while count < k and heap.heap_size() > 0:
         score, name = heap.pop_max()
         email = users[name][0]                # get matched user's email
-        print("Match:", name, "- score:", score)
-        print("Contact them at:", email)
+        print("Match:", name, "with score:", score)
+        print("Contact them at:", email, "to organise your study session")
+        print("Model email you could use: Hi",name,
+              "!\nI am contacting you as you were part of my top matches on StudyLink, let me know if you want to organize a study session.\nHope to hear from you soon!")  
         print()
         count += 1
     print()
@@ -223,23 +239,23 @@ def main():
     users = load_users()
 
     while True:
-        print("1) Create user")
-        print("2) Show matches")
-        print("3) Quit")
-        choice = input("Choose an option: ").strip()
+        print("Type 1 to create user")
+        print("Type 2 to show matches")
+        print("Type 3 to quit")
+        choice = input("choose your option: ").strip()
 
         if choice == "1":
             create_user(users)
         elif choice == "2":
             if len(users) == 0:
-                print("No users in the system yet.")
+                print("There are no users in the system yet, sorry")
             else:
                 show_best_matches(users)
         elif choice == "3":
-            print("Goodbye!")
+            print("Hope you found a great match, goodbye!")
             break
         else:
-            print("Invalid option, try again.")
+            print("Your option is invalid, please try again")
 
 
 main()
