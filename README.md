@@ -52,7 +52,7 @@ Future features:
 
 no need to type any terminal commands, just follow these simple steps:
 
-Make sure Python 3 and IDLE are installed!!! (you can install python on: [first letter of first name + last name](https://www.python.org/downloads/) )
+Make sure Python 3 and IDLE are installed!!! (you can install python on: [python download URL](https://www.python.org/downloads/) )
 
 Step 1: Download ZIP
 (Click on the green code -> download ZIP button on GitHub)
